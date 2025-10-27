@@ -10,7 +10,7 @@
 section{
     display:grid;
     grid-template-columns: 75% 25%;
-    height: 90%;
+    height: 92.5%;
     border: 10px solid #15182b;
 }
 
