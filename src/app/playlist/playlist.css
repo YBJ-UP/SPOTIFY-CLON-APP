@@ -1,7 +1,9 @@
 :host{
     height: 100%;
-    width: 100%;
-    border-left:solid #181c32;
+    width: 80%;
+    border-left: 10px solid #15182b;
+    background-color: #15182b;
+    justify-self: center;
 }
 
 h2{

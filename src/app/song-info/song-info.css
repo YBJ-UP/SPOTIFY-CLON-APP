@@ -46,33 +46,38 @@
     width: 100%;
     height: fit-content;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
     padding-block: 20px;
 }
 
 :host(.main) .card-song-img{
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
     border-radius: 200px;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 :host(.main) .card-song-details{
     width: 300px;
     align-content: baseline;
     overflow: hidden;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 :host(.main) .card-song-details .card-song-title{
+    font-size: 17px;
+    margin-bottom: 5px;
     font-weight: 400;
-    font-size: 2.3em;
 }
 
 :host(.main) .card-song-details .card-song-artist{
-    font-weight: 200;
-    font-size: 1.5em;
+    font-size: 15px;
+    color: rgb(82, 82, 82);
+    font-weight: 300;
+    margin-block: 5px;
 }
 
 .card-song-details h2,

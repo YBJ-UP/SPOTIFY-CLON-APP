@@ -1,16 +1,13 @@
 :host{
     width: 100%;
-    height: 90px;
-    margin-top: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    border-top: solid #181c32;
 }
 #control-bar{
     margin-block: 30px;
-    width: 70%;
+    width: 100%;
 }
 
 .player-buttons{
@@ -29,5 +26,4 @@
 
 input{
     accent-color: #FF3B82;
-
 }

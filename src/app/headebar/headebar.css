@@ -12,9 +12,11 @@
 .search-container {
   display: flex;
   align-items: center;
-  background-color:#FF3B82; 
+  background-color: #15182b;
+  border: 1px solid #1c2036;
   border-radius: 30px;
   padding: 4px 20px; 
+  height: 30px;
 }
 
 .search-icon {
@@ -28,7 +30,7 @@
   color: white;
   padding: 5px;
   flex-grow: 1; 
-  font-size: 1rem;
+  font-size: 15px;
 }
 .search-input:focus {
   outline: none; 

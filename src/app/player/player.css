@@ -4,13 +4,14 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    background-color: #181b31;
 }
 
 section{
     display:grid;
     grid-template-columns: 75% 25%;
     height: 90%;
-    border: solid #181c32;
+    border: 10px solid #15182b;
 }
 
 #main{
