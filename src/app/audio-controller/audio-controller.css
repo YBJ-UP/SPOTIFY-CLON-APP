@@ -4,6 +4,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    padding-block: 60px;
 }
 #control-bar{
     margin-block: 30px;
@@ -20,10 +21,10 @@
 
 .player-buttons span i{
     font-size: 2em;
-    color: #FF3B82;
+    color: #f84788;
     text-shadow: 0 0 30px rgba(255, 0, 221, 0.3);
 }
 
 input{
-    accent-color: #FF3B82;
+    accent-color: #f84788;
 }

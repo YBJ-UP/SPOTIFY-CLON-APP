@@ -49,7 +49,7 @@
     flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
-    padding-block: 20px;
+    padding-block: 60px;
 }
 
 :host(.main) .card-song-img{
