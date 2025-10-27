@@ -1,0 +1,39 @@
+:host{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10%;
+}
+
+.header-bar{
+  width: 50%;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color:#FF3B82; 
+  border-radius: 30px;
+  padding: 4px 20px; 
+}
+
+.search-icon {
+  color:white;
+  margin-right: 10px;
+}
+
+.search-input {
+  border: none;
+  background: none;
+  color: white;
+  padding: 5px;
+  flex-grow: 1; 
+  font-size: 1rem;
+}
+.search-input:focus {
+  outline: none; 
+}
+
+.search-input::placeholder {
+  color: white;
+}
