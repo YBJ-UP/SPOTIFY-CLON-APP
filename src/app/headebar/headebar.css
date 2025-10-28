@@ -7,6 +7,10 @@
 
 .header-bar{
   width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7.5%;
 }
 
 .search-container {
