@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Song } from '../interfaces/song';
-import { SpotifyPlaylistService } from '../services/spotify-api/spotify-playlist-service';
+import { SpotifyAlbumService } from '../services/spotify-api/spotify-album-service';
+import { SpotifySearchResponse } from '../interfaces/spotify-api/spotify-search-response';
+import { debounceTime, Subject } from 'rxjs';
+import { SpotifySearch } from '../services/spotify-search';
 
 @Component({
   selector: 'app-player',
@@ -9,12 +12,59 @@ import { SpotifyPlaylistService } from '../services/spotify-api/spotify-playlist
   styleUrl: './player.css'
 })
 export class Player {
+  private searchSubject = new Subject<string>()
+  protected searchResults = signal<SpotifySearchResponse>({})
+  protected selectedAlbums: any = null
+  private previousPlaylist: Song[] | null = null
 
-  constructor(public playlista: SpotifyPlaylistService){
-    this.playlista.getPlaylist().subscribe(data => {
-      console.log(data)
-    })
+  constructor(private search: SpotifySearch, private albumServ: SpotifyAlbumService){
     console.log("COMPONENTE APP CREADO")
+
+    this.searchSubject.pipe(
+      debounceTime(300)
+    ).subscribe({
+      next: query => {
+        console.log('Ejecutando búsqueda para:', query);
+        this.performSearch(query);
+      },
+      error: error => {
+        console.error('Error en el observable de búsqueda:', error);
+      }
+    });
+  }
+
+  showAlbum(album: any): void {
+    if (!album || !album.id) return;
+    console.log('Cargando canciones del álbum:', album.name, album.id);
+    this.albumServ.getAlbumSongs(album.id).subscribe({
+      next: (response) => {
+        const items = response.tracks?.items || [];
+        console.log(`Pistas recibidas: ${items.length}`);
+
+        const mapped: Song[] = items.map((t: any) => ({
+          cover: t?.album?.images?.[0]?.url || 'assets/default-track.png',
+          artist: t?.artists?.[0]?.name || 'Unknown Artist',
+          name: t?.name || 'Unknown'
+        }));
+
+        this.previousPlaylist = Array.isArray(this.playlist) ? [...this.playlist] : null;
+
+        this.playlist = mapped;
+
+        this.selectedAlbums = album;
+
+        if (mapped.length) {
+          this.song = {
+            cover: mapped[0].cover,
+            name: mapped[0].name,
+            artist: mapped[0].artist
+          };
+        }
+      },
+      error: (e) => {
+        console.error('Error al obtener canciones del álbum:', e);
+      }
+    });
   }
 
   song = {
