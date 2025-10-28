@@ -12,7 +12,6 @@ import { Player } from './player/player';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth-interceptor';
 import { addAuthHeaderInterceptor } from './interceptors/add-auth-header-interceptor';
-import { Headebar } from './headebar/headebar';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { Headebar } from './headebar/headebar';
     SongInfo,
     AudioController,
     Playlist,
-    Player,
-    Headebar
+    Player
   ],
   imports: [
     BrowserModule,
