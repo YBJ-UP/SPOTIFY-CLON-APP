@@ -40,11 +40,12 @@ export class Player {
       next: (response) => {
         const items = response.tracks?.items || [];
         console.log(`Pistas recibidas: ${items.length}`);
+        console.log(response)
 
         const mapped: Song[] = items.map((t: any) => ({
           cover: t?.album?.images?.[0]?.url || 'assets/default-track.png',
-          artist: t?.artists?.[0]?.name || 'Unknown Artist',
-          name: t?.name || 'Unknown'
+          artist: t?.artists?.[0]?.name || 'Artista desconocido',
+          name: t?.name || 'Desconocido'
         }));
 
         this.previousPlaylist = Array.isArray(this.playlist) ? [...this.playlist] : null;
@@ -98,6 +99,14 @@ export class Player {
         this.searchResults.set(output)
       }
     })
+  }
+
+  trackImg(track: any){
+    try {
+      return track?.album?.images?.[0]?.url || 'assets/default-track.png';
+    } catch {
+      return 'assets/default-track.png';
+    }
   }
 
   song = {

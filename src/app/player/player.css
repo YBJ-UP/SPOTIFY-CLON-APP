@@ -5,6 +5,7 @@
     align-items: center;
     overflow: hidden;
     background-color: #181b31;
+    overflow: hidden;
 }
 
 section{
@@ -52,6 +53,36 @@ section{
 
 .search-input::placeholder {
   color: white;
+}
+
+.search-results{
+    position: absolute;
+    top: 7.5%;
+    right: 50%;
+    width: 60%;max-height: 80%;
+    border-radius: 20px;
+    padding-inline: 20px;
+    padding-block: 10px;
+    transform: translateX(50%);
+    background-color: #15182b;
+    align-content: center;
+    justify-content: center;
+    overflow-y: scroll;
+}
+
+.hidden{
+    display: none;
+}
+
+.album-item{
+    display: flex;
+    justify-content: left;
+    margin-block: 10px;
+
+    img {
+        height: 70px;
+        margin-inline: 10px;
+    }
 }
 
 #main{
