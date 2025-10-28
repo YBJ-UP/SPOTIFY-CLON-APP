@@ -4,12 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment.development';
 import { CookieStorageService } from '../cookie-storage-service';
-
-export interface SpotifyTokenResponse {
-  access_token: string,
-  token_type: string,
-  expires_in: number
-}
+import { TokenResponse } from '../../interfaces/api/token-response';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +34,7 @@ export class TokenService {
     return this.cookieService.getCookieValue(this.TOKEN)
   }
 
-  private storeToken(response: SpotifyTokenResponse){
+  private storeToken(response: TokenResponse){
     const expireTime = new Date().getTime() + response.expires_in * 1000
     this.cookieService.createCookie(this.TOKEN, response.access_token)
     this.cookieService.createCookie(this.EXPIRES, expireTime.toString())
@@ -51,9 +46,9 @@ export class TokenService {
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .set('Authorization', `Basic ${credentials}`)
     
-    const body = 'grant-type=client_credentials'
+    const body = 'grant_type=client_credentials'
 
-    return this.http.post<SpotifyTokenResponse>(
+    return this.http.post<TokenResponse>(
       environment.AUTH_API_URL,
       body, { headers }
     ).pipe(

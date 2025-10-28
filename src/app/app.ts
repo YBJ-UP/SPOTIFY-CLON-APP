@@ -18,8 +18,13 @@ export class App implements OnInit{
 
 
   ngOnInit(): void {
-    this._spotifyLoginService.getToken().subscribe();
     console.log("ESTE ES UN LOG DE CONTROL")
+    this._spotifyLoginService.getToken().subscribe({
+      next: (response) => {
+        console.log("Token obtenido correctamente")
+      },
+      error: (e) => { console.log(`Error al obtener token: ${e}`) }
+    });
   }
 
   doRequest(){
