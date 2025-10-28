@@ -40,7 +40,6 @@ export class Player {
       next: (response) => {
         const items = response.tracks?.items || [];
         console.log(`Pistas recibidas: ${items.length}`);
-        console.log(response)
         console.log(items)
 
         const mapped: Song[] = items.map((t: any) => ({
@@ -79,6 +78,7 @@ export class Player {
   }
 
   selectFromPlaylist(item: Song){
+    console.log(item)
     this.song = { cover: item.cover, artist: item.artist, name: item.name }
   }
 

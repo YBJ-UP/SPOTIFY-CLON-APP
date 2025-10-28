@@ -51,6 +51,19 @@
         <app-song-info [song]="song" displayMode="main"></app-song-info>
         <app-audio-controller></app-audio-controller>
     </div>
-    <app-playlist [playlist]="playlist"></app-playlist>
+    <div class="playlist">
+        <h2>Siguiente:</h2>
+        <div class="content">
+            @for (item of playlist; track item.name){
+                <div class="card" (click)="selectFromPlaylist(item)">
+                    <img [src]="item.cover" [alt]="item.name">
+                    <div class="details">
+                        <h2>{{item.name}}</h2>
+                        <h3>{{item.artist}}</h3>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 
 </section>
