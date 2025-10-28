@@ -67,6 +67,39 @@ export class Player {
     });
   }
 
+  restorePlaylist(){
+    if (this.previousPlaylist){
+      this.playlist = [...this.previousPlaylist]
+      this.previousPlaylist = null
+    }
+    this.selectedAlbums = null
+    this.searchResults.set({})
+  }
+
+  selectFromPlaylist(item: Song){
+    this.song = { cover: item.cover, artist: item.artist, name: item.name }
+  }
+
+  onSearch(event: Event) {
+    const input = event.target as HTMLInputElement
+    const query = input.value
+    console.log(`Término de búsqueda: ${query}`)
+    this.searchSubject.next(query)
+  }
+
+  private performSearch(query: string){
+    this.search.search(query, ['track', 'artist', 'album']).subscribe({
+      next: (output) => {
+        console.log("Datos enconntrados:", {
+          tracks: output.tracks?.items?.length || 0,
+          artists: output.artists?.items?.length || 0,
+          albums: output.albums?.items?.length || 0
+        })
+        this.searchResults.set(output)
+      }
+    })
+  }
+
   song = {
     cover: "https://picsum.photos/200",
     name: "CANCION 1",
