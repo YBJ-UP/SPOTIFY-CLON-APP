@@ -16,6 +16,7 @@ export class Player {
   protected searchResults = signal<SpotifySearchResponse>({})
   protected selectedAlbums: any = null
   private previousPlaylist: Song[] | null = null
+  protected albumCover: any = null;
 
   constructor(private search: SpotifySearch, private albumServ: SpotifyAlbumService){
     console.log("COMPONENTE APP CREADO")
@@ -36,14 +37,17 @@ export class Player {
   showAlbum(album: any): void {
     if (!album || !album.id) return;
     console.log('Cargando canciones del álbum:', album.name, album.id);
+    this.albumCover = album.images?.[0]?.url
     this.albumServ.getAlbumSongs(album.id).subscribe({
       next: (response) => {
         const items = response.tracks?.items || [];
         console.log(`Pistas recibidas: ${items.length}`);
         console.log(items)
 
-        const mapped: Song[] = items.map((t: any) => ({
-          cover: t?.album?.images?.[0]?.url || 'CDeezNuts.webp',
+        const mapped: Song[] = items.map((t: any) => (
+          console.log(t),
+          {
+          cover: this.albumCover || 'CDeezNuts.webp',
           artist: t?.artists?.[0]?.name || 'Artista desconocido',
           name: t?.name || 'Desconocido'
         }));

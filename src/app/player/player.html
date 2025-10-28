@@ -56,7 +56,7 @@
         <div class="content">
             @for (item of playlist; track item.name){
                 <div class="card" (click)="selectFromPlaylist(item)">
-                    <img [src]="item.cover" [alt]="item.name">
+                    <img [src]="albumCover" [alt]="item.name">
                     <div class="details">
                         <h2>{{item.name}}</h2>
                         <h3>{{item.artist}}</h3>
