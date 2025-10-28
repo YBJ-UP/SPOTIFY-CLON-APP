@@ -1,5 +1,5 @@
 :host{
-    height: 95%;
+    height: 80vh;
     width: 90%;
     border-radius: 10px;
     border-left: 10px solid #15182b;
@@ -16,7 +16,7 @@ h2{
 }
 
 .content{
-    height: 95%;
-    overflow: auto;
+    height: 70vh;
+    overflow-y: scroll;
     scrollbar-width: none;
 }

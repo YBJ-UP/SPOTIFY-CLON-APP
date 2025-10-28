@@ -41,9 +41,10 @@ export class Player {
         const items = response.tracks?.items || [];
         console.log(`Pistas recibidas: ${items.length}`);
         console.log(response)
+        console.log(items)
 
         const mapped: Song[] = items.map((t: any) => ({
-          cover: t?.album?.images?.[0]?.url || 'assets/default-track.png',
+          cover: t?.album?.images?.[0]?.url || 'CDeezNuts.webp',
           artist: t?.artists?.[0]?.name || 'Artista desconocido',
           name: t?.name || 'Desconocido'
         }));
@@ -91,8 +92,8 @@ export class Player {
   private performSearch(query: string){
     this.search.search(query, ['track', 'artist', 'album']).subscribe({
       next: (output) => {
-        console.log("Datos enconntrados:", {
-          tracks: output.tracks?.items?.length || 0,
+        console.log("Datos encontrados:", {
+          songs: output.tracks?.items?.length || 0,
           artists: output.artists?.items?.length || 0,
           albums: output.albums?.items?.length || 0
         })
@@ -103,7 +104,7 @@ export class Player {
 
   trackImg(track: any){
     try {
-      return track?.album?.images?.[0]?.url || 'assets/default-track.png';
+      return track?.album?.images?.[0]?.url || 'CDeezNuts.webp';
     } catch {
       return 'assets/default-track.png';
     }

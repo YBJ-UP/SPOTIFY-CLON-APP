@@ -27,6 +27,7 @@ interface PagingObject<T> {
     previous: string | null;
     total: number;
 }
+
 export interface SpotifySearchResponse {
     tracks?: PagingObject<SpotifyTrackResponse>;
     artists?: PagingObject<SpotifyArtistResponse>;

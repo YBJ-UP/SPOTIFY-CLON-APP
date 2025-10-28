@@ -5,7 +5,7 @@
   </div>
 </header>
 
-@if (searchResults().tracks?.items?.length && searchResults().artists?.items?.length && searchResults().albums?.items?.length){
+@if (searchResults().tracks?.items?.length || searchResults().artists?.items?.length || searchResults().albums?.items?.length){
     <div class="search-results" id="results">
 
         @if (searchResults().albums?.items?.length){

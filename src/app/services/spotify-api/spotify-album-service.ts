@@ -15,7 +15,7 @@ export class SpotifyAlbumService {
     return this.http.get<any>(url).pipe(
       map((response) => {
         return {
-          songs: {
+          tracks: {
             href: response.href,
             items: response.items,
             limit: response.limit || response.items.length,
