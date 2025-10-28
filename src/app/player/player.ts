@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Song } from '../interfaces/song';
+import { SpotifyPlaylistService } from '../services/spotify-api/spotify-playlist-service';
 
 @Component({
   selector: 'app-player',
@@ -8,6 +9,13 @@ import { Song } from '../interfaces/song';
   styleUrl: './player.css'
 })
 export class Player {
+
+  constructor(public playlista: SpotifyPlaylistService){
+    this.playlista.getPlaylist().subscribe(data => {
+      console.log(data)
+    })
+    console.log("COMPONENTE APP CREADO")
+  }
 
   song = {
     cover: "https://picsum.photos/200",
@@ -57,10 +65,6 @@ export class Player {
       artist: "ARTISTA 1"
     },
   ];
-
-  constructor(){
-    console.log("COMPONENTE APP CREADO");
-  }
 
 
 }
