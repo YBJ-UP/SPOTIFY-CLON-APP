@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import {of} from 'rxjs';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, retryWhen, delay, take, tap, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment.development'; 
 import { SpotifySearchResponse } from '../interfaces/spotify-api/spotify-search-response';
+
 @Injectable({
   providedIn: 'root'
 })

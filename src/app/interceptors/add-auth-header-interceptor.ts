@@ -1,5 +1,3 @@
-// src/app/interceptors/add-auth-header-interceptor.ts (Unificado)
-
 import { HttpHandlerFn, HttpInterceptorFn, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { CookieStorageService } from '../services/cookie-storage-service';
