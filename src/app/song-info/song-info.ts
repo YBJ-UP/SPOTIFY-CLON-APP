@@ -1,5 +1,6 @@
-import { booleanAttribute, Component, EventEmitter, input, OnInit, Output } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { Song } from '../interfaces/song';
+import { PlayerService } from '../services/player-service';
 
 @Component({
   selector: 'app-song-info',
@@ -11,10 +12,15 @@ import { Song } from '../interfaces/song';
   }
 })
 export class SongInfo{
-  display_mode = input.required<string>({ alias: 'displayMode'});
-  song = input.required<Song>();
+  private state = inject(PlayerService)
+  
+  display_mode = input<string | null>();
+  song = input<Song | null>();
+
+  currentSong = computed(() => this.song() ?? this.state.currentSong())
+  currentDisplay = computed(() => this.display_mode() ?? this.state.displayMode())
 
   displayMode(){
-    return this.display_mode();
+    return this.currentDisplay()
   }
 }

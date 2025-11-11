@@ -4,6 +4,7 @@ import { SpotifyAlbumService } from '../services/spotify-api/spotify-album-servi
 import { SpotifySearchResponse } from '../interfaces/spotify-api/spotify-search-response';
 import { debounceTime, Subject } from 'rxjs';
 import { SpotifySearch } from '../services/spotify-search';
+import { PlayerService } from '../services/player-service';
 
 @Component({
   selector: 'app-player',
@@ -18,7 +19,7 @@ export class Player {
   private previousPlaylist: Song[] | null = null
   protected albumCover: any = null;
 
-  constructor(private search: SpotifySearch, private albumServ: SpotifyAlbumService){
+  constructor(private search: SpotifySearch, private albumServ: SpotifyAlbumService, protected state: PlayerService){
     console.log("COMPONENTE APP CREADO")
 
     this.searchSubject.pipe(
@@ -59,11 +60,12 @@ export class Player {
         this.selectedAlbums = album;
 
         if (mapped.length) {
-          this.song = {
+          const currentSong = {
             cover: mapped[0].cover,
             name: mapped[0].name,
             artist: mapped[0].artist
           };
+          this.state.currentSong.set(currentSong)
         }
       },
       error: (e) => {
@@ -78,12 +80,13 @@ export class Player {
       this.previousPlaylist = null
     }
     this.selectedAlbums = null
-    this.searchResults.set({})
+    this.state.searchResults.set({})
   }
 
   selectFromPlaylist(item: Song){
     console.log(item)
     this.song = { cover: item.cover, artist: item.artist, name: item.name }
+    this.state.currentSong.set(item)
   }
 
   onSearch(event: Event) {
@@ -101,7 +104,7 @@ export class Player {
           artists: output.artists?.items?.length || 0,
           albums: output.albums?.items?.length || 0
         })
-        this.searchResults.set(output)
+        this.state.searchResults.set(output)
       }
     })
   }
