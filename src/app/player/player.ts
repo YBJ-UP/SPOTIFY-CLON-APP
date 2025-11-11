@@ -5,6 +5,7 @@ import { SpotifySearchResponse } from '../interfaces/spotify-api/spotify-search-
 import { debounceTime, Subject } from 'rxjs';
 import { SpotifySearch } from '../services/spotify-search';
 import { PlayerService } from '../services/player-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-player',
@@ -14,12 +15,16 @@ import { PlayerService } from '../services/player-service';
 })
 export class Player {
   private searchSubject = new Subject<string>()
-  protected searchResults = signal<SpotifySearchResponse>({})
   protected selectedAlbums: any = null
   private previousPlaylist: Song[] | null = null
   protected albumCover: any = null;
 
-  constructor(private search: SpotifySearch, private albumServ: SpotifyAlbumService, protected state: PlayerService){
+  constructor(
+    private search: SpotifySearch,
+    private albumServ: SpotifyAlbumService,
+    protected state: PlayerService,
+    private router: Router
+  ){
     console.log("COMPONENTE APP CREADO")
 
     this.searchSubject.pipe(
@@ -36,42 +41,7 @@ export class Player {
   }
 
   showAlbum(album: any): void {
-    if (!album || !album.id) return;
-    console.log('Cargando canciones del álbum:', album.name, album.id);
-    this.albumCover = album.images?.[0]?.url
-    this.albumServ.getAlbumSongs(album.id).subscribe({
-      next: (response) => {
-        const items = response.tracks?.items || [];
-        console.log(`Pistas recibidas: ${items.length}`);
-        console.log(items)
-
-        const mapped: Song[] = items.map((t: any) => (
-          console.log(t),
-          {
-          cover: this.albumCover || 'CDeezNuts.webp',
-          artist: t?.artists?.[0]?.name || 'Artista desconocido',
-          name: t?.name || 'Desconocido'
-        }));
-
-        this.previousPlaylist = Array.isArray(this.playlist) ? [...this.playlist] : null;
-
-        this.playlist = mapped;
-
-        this.selectedAlbums = album;
-
-        if (mapped.length) {
-          const currentSong = {
-            cover: mapped[0].cover,
-            name: mapped[0].name,
-            artist: mapped[0].artist
-          };
-          this.state.currentSong.set(currentSong)
-        }
-      },
-      error: (e) => {
-        console.error('Error al obtener canciones del álbum:', e);
-      }
-    });
+    this.state.showAlbum(album)
   }
 
   restorePlaylist(){
@@ -84,9 +54,7 @@ export class Player {
   }
 
   selectFromPlaylist(item: Song){
-    console.log(item)
-    this.song = { cover: item.cover, artist: item.artist, name: item.name }
-    this.state.currentSong.set(item)
+    this.state.selectFromPlaylist(item)
   }
 
   onSearch(event: Event) {
@@ -97,6 +65,9 @@ export class Player {
   }
 
   private performSearch(query: string){
+    
+    if (query.trim()){ this.router.navigate(["search"]) } else { this.router.navigate(['']) }
+
     this.search.search(query, ['track', 'artist', 'album']).subscribe({
       next: (output) => {
         console.log("Datos encontrados:", {

@@ -5,47 +5,6 @@
   </div>
 </header>
 
-@if (state.searchResults().tracks?.items?.length || state.searchResults().artists?.items?.length || state.searchResults().albums?.items?.length){
-    <div class="search-results" id="results">
-
-        @if (state.searchResults().albums?.items?.length){
-            <div>
-                <h2>Albumes</h2>
-                <div>
-                    @for (album of state.searchResults().albums?.items; track album.id) {
-                        <div class="album-item" [id]="album.id" (click)="showAlbum(album)">
-                            <img [src]="album.images?.[0]?.url" [alt]="album.name">
-                            <div>
-                                <h4>{{album.name}}</h4>
-                                <p>{{album.artists[0]?.name}}</p>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        }
-
-        @if (state.searchResults().tracks?.items?.length){
-            <div>
-                <h2>Canciones</h2>
-                <div>
-                    @for (song of state.searchResults().tracks?.items; track song.id) {
-                        <div class="album-item" [id]="song.id" (click)="selectFromPlaylist({cover: trackImg(song), name: song.name, artist: song.artists[0]?.name || 'Desconocido'})">
-                            <img [src]="trackImg(song)" [alt]="song.name">
-                            <div>
-                                <h4>{{song.name}}</h4>
-                                <p>{{song.artists[0]?.name}}</p>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        }
-    </div>
-}@else{
-    <div class="hidden" id="results"></div>
-}
-
 <section>
     <div id="main">
         <router-outlet></router-outlet>
@@ -54,9 +13,9 @@
     <div class="playlist">
         <h2>Siguiente:</h2>
         <div class="content">
-            @for (item of playlist; track item.name){
+            @for (item of state.playlist(); track item.name){
                 <div class="card" (click)="selectFromPlaylist(item)">
-                    <img [src]="albumCover" [alt]="item.name">
+                    <img [src]="state.albumCover()" [alt]="item.name">
                     <div class="details">
                         <h2>{{item.name}}</h2>
                         <h3>{{item.artist}}</h3>

@@ -1,0 +1,40 @@
+@if (results().tracks?.items?.length || results().artists?.items?.length || results().albums?.items?.length){
+    <div class="search-results" id="results">
+
+        @if (results().albums?.items?.length){
+            <div>
+                <h2>Albumes</h2>
+                <div>
+                    @for (album of results().albums?.items; track album.id) {
+                        <div class="album-item" [id]="album.id" (click)="showAlbum(album)">
+                            <img [src]="album.images?.[0]?.url" [alt]="album.name">
+                            <div>
+                                <h4>{{album.name}}</h4>
+                                <p>{{album.artists[0]?.name}}</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (results().tracks?.items?.length){
+            <div>
+                <h2>Canciones</h2>
+                <div>
+                    @for (song of results().tracks?.items; track song.id) {
+                        <div class="album-item" [id]="song.id" (click)="selectSong({cover: trackImg(song), name: song.name, artist: song.artists[0]?.name || 'Desconocido'})">
+                            <img [src]="trackImg(song)" [alt]="song.name">
+                            <div>
+                                <h4>{{song.name}}</h4>
+                                <p>{{song.artists[0]?.name}}</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}@else{
+    <div class="hidden" id="results">No hay nadota naco</div>
+}
