@@ -8,6 +8,11 @@
     display: flex;
     flex-direction: column;
 
+    div{
+        padding-inline: 10px;
+        background-color: #15182b;
+    }
+
     div div{
         display: flex;
     }
